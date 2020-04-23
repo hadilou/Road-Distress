@@ -5,33 +5,32 @@
 """
 from gaps_dataset import gaps
 import numpy as np
+from PIL import Image
+import os
+import glob
 
-#Dataset Folder path
-dataset_dir = '../Dataset'
-#load training dataset info file
-train_info = gaps.get_dataset_info(version=2,
-                                   patchsize=160,
-                                   issue='NORMvsDISTRESS_50k',
-                                   subset='train',
-                                   datadir='../Dataset')
+test_img_link = "../Dataset/v2/segmentation/images/_cam12_1431182332579_000743.jpg"
+test_folder = "../Dataset/test"
+def crop(im,desiredHeight,desiredWidth):
+    """ 
+    Crop given image to desired height and width
 
-# load all chunks of training dataset
-x_train = []#mat to store x_train
-y_train = []#mat to store y_train
+    """
+    imgwidth, imgheight = im.size
+    for i in range(imgheight//desiredHeight):
+        for j in range(imgwidth//desiredWidth):
+            box = (j*desiredWidth, i*desiredHeight, (j+1)*desiredWidth, (i+1)*desiredHeight)
+            out = im.crop(box)
+            #out.show()
+            yield out
 
-for chunk_id in range(train_info['n_chunks']):
-    x, y = gaps.load_chunk(
-                        chunk_id=chunk_id,
-                        version=2,
-                        patchsize=160,
-                        issue='NORMvsDISTRESS_50k',
-                        subset='train',
-                        datadir='../Dataset')
-    x_train.append(x)
-    y_train.append(y)
-#convert to np array
-x_train = np.array(x_train)
-y_train = np.array(y_train)
-print("Shape of x_train:"+str(x_train))
-print("Shape of y_train:"+str(y_train))
+im = Image.open(test_img_link)
+
+crop(im,320,240)
+
+
+
+
+
+
 
