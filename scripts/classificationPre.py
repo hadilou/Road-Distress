@@ -32,6 +32,6 @@ for chunk_id in range(train_info['n_chunks']):
 #convert to np array
 x_train = np.array(x_train)
 y_train = np.array(y_train)
-print("Shape of x_train:"+str(x_train))
-print("Shape of y_train:"+str(y_train))
+print("Shape of x_train:"+str(x_train[0]))
+#print("Shape of y_train:"+str(y_train.shape))
 

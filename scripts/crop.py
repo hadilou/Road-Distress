@@ -10,9 +10,7 @@ import os
 import glob
 import cv2
 import argparse
-
-test_img_link = "../Dataset/v2/segmentation/test/_cam11_1431182256923_000012.png"
-test_folder = "../Dataset/test"
+import shutil
 
 def cropAndSave(im,output_dir,desiredHeight=180,desiredWidth=320):
     """ 
@@ -34,8 +32,12 @@ def cropAndSave(im,output_dir,desiredHeight=180,desiredWidth=320):
     """
     imgwidth, imgheight = im.size
     #make sure directory exists
-    if (os.path.isdir(output_dir)==False):
+    if (os.path.isdir(output_dir)):
+        shutil.rmtree(output_dir)
         os.mkdir(output_dir)
+    else:
+        os.mkdir(output_dir)
+
     for i in range(imgheight//desiredHeight):
         for j in range(imgwidth//desiredWidth):
             f_name,f_extension = os.path.splitext(im.filename)
@@ -43,7 +45,6 @@ def cropAndSave(im,output_dir,desiredHeight=180,desiredWidth=320):
             box = (j*desiredWidth, i*desiredHeight, (j+1)*desiredWidth, (i+1)*desiredHeight)
             out = im.crop(box)
             out = np.array(out)
-            print(output_dir)
             path = output_dir+f_name+'_'+str(i)+'_'+str(j)+f_extension
             print("Saving cropped image to "+path)
             cv2.imwrite(path,out)
@@ -76,7 +77,7 @@ def main(input_dir,output_dir):
                 cropAndSave(im,output_dir) 
             except Exception as e:
                 print(e)
-        else:#file not image ignore
+        else:#file not image;ignore
             pass
     
 if __name__=='__main__':
