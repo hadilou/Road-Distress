@@ -1,9 +1,3 @@
-# Road-Distress
-Data Partitioning 
-Void Segments Removal
-Conversion from multiclass to binary class problem
-Data Augmentation (Translation, Rotation, Brightness)
-
 # Segmentation
 
 gaps.download(login='login',
