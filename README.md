@@ -4,7 +4,7 @@ Void Segments Removal
 Conversion from multiclass to binary class problem
 Data Augmentation (Translation, Rotation, Brightness)
 
-Segmentation
+# Segmentation
 
 gaps.download(login='login',
 	output_dir ='../Dataset',
@@ -39,7 +39,7 @@ Each individual pixel in mask images correspond to one of these classes:
 If more than 80% of a segment is void the segment is simply ignored and corresponding image is removed from the images dataset. The threshold value can be also manipulated using eliminate_void.py script.
 
 
-Classification
+# Classification
 
 gaps.download(login='replace_with_your_login',
                     output_dir='desired folder',
