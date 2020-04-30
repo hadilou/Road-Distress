@@ -23,10 +23,11 @@ def non_void_percentage(mask):
     """
     width,height = mask.shape
     # boolean matrix , faster, one of the comparer should be numpy matrix at least 
-    x,_y = (mask != 1).nonzero()
+    # a void pixel is a zero pixel
+    x,_y = (mask == 0).nonzero()
     return (x.shape[0] / (width * height) ) * 100.0
 
-def main(input_dir,output_dir,threshold=5.0):
+def main(input_dir,output_dir,threshold):
     """
     Main function
     """
@@ -45,26 +46,26 @@ def main(input_dir,output_dir,threshold=5.0):
                 filename = substract(im.filename,os.path.dirname(im.filename))
                 m = np.array(im)
                 p = non_void_percentage(np.array(m))
-                print(p)
-                if (p >= float(threshold)):#save mask and its corresponding training img
+                print("Percentage of void is "+str(p))
+                if (p <= threshold):#save mask and do nothing to corresponding training img
                     #save mask
                     path = output_dir+ filename
                     print("Saving to ",format(path))
                     cv2.imwrite(path,m)
                     
                 else:
-                    #percentage less than threshold remove it from training images
+                    #percentage less than threshold, remove corresponding img from  images folder
                     path = os.path.dirname(input_dir)+"/images"
-                    print("The non void percentage is ",p)
+                    f_name,_f_extension = os.path.splitext(im.filename)
+                    f_name = substract(f_name,os.path.dirname(f_name))
                     print("Removing "+str(filename)+" from "+ str(path))
-                    path =  path+filename
+                    path =  path+f_name + ".jpg"
                     os.remove(path)
-
                     
             except Exception as e:
                 print(e)
         else:#file not image;ignore
-            print("File is not an image")
+            print(str(file)+"  is not an image, skipping")
 
 def substract(a,b):
     """Substract two strings
@@ -92,4 +93,5 @@ if __name__=='__main__':
     input_dir = args["inputdir"]
     output_dir = args["outputdir"]
     threshold = args["threshold"]
-    main(input_dir,output_dir,threshold)
+    main(input_dir,output_dir,threshold=80.0)
+    

@@ -28,16 +28,10 @@ def cropAndSave(im,output_dir,desiredHeight=180,desiredWidth=320):
 
     Returns
     ----- 
-    out: Image, yield  of croped images
+    out: Image, yield croped image(s)
     """
     imgwidth, imgheight = im.size
-    #make sure directory exists
-    if (os.path.isdir(output_dir)):
-        shutil.rmtree(output_dir)
-        os.mkdir(output_dir)
-    else:
-        os.mkdir(output_dir)
-
+ 
     for i in range(imgheight//desiredHeight):
         for j in range(imgwidth//desiredWidth):
             f_name,f_extension = os.path.splitext(im.filename)
@@ -69,6 +63,13 @@ def main(input_dir,output_dir):
     """
     Main function
     """
+    #make sure directory exists
+    if (os.path.isdir(output_dir)):
+        shutil.rmtree(output_dir)
+        os.mkdir(output_dir)
+    else:
+        os.mkdir(output_dir)
+
     #browse inputdir , crop and save images
     for file in os.listdir(input_dir):
         if file.lower().endswith((".jpg",".png",".PNG",".JPG",".jpeg",".JPEG")):
@@ -85,8 +86,8 @@ if __name__=='__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-i","--inputdir",required=True,help="Path to input directory")
     ap.add_argument("-o","--outputdir",required=True,help="Path to output directory")
-    ap.add_argument("-w","--width",required=False,help="Desired Width, default 180")
-    ap.add_argument("-l","--height",required=False,help="Desired Height, default 320")
+    ap.add_argument("-w","--width",required=False,help="Desired Width, default 320")
+    ap.add_argument("-l","--height",required=False,help="Desired Height, default 180")
 
     args = vars(ap.parse_args())
     input_dir = args["inputdir"]

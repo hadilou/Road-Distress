@@ -25,7 +25,7 @@ for chunk_id in range(train_info['n_chunks']):
                         version=2,
                         patchsize=160,
                         issue='NORMvsDISTRESS_50k',
-                        subset='train',
+                        subset='test',
                         datadir='../Dataset')
     x_train.append(x)
     y_train.append(y)
