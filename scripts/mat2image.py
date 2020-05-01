@@ -37,24 +37,35 @@ def denormalize(chunk,max,min,mean,to_max,to_min):
 
 def mat2image(chunk,chunkid,output_dir):
     """
+    Convert and save numpy matrix to images
 
+    Parameters
+    -------
+    chunk: Numpy matrix, chunk of data to convert and save
+
+    chunkid: Int, index of chunk in input folder
+
+    output_dir: String, path for saving chunk images
     """
     desiredFormat = ".png"
+    #denormalize chunk
     denormalized = denormalize(chunk,255,0,127.5,1,-1)#denormalized chunk
+    #convert greyscale to RGB
     imgs=cv2.merge([denormalized, denormalized, denormalized])
-
+    #print(imgs.shape)
     for i in range(chunk.shape[0]):
-        img = cv2.cvtColor(imgs[i][0], cv2.COLOR_RGB2BGR)
-        path = output_dir + "/label_"+str(chunkid)+"/img"+str(i)+desiredFormat
-        print("Saving to :",format(path))
+        img = cv2.cvtColor(imgs[i][0], cv2.COLOR_RGB2BGR)#opencv  sees bgr  as rgb
+        temp =os.path.join(output_dir,"label_"+str(chunkid))
+        if (os.path.isdir(temp)):#making sure label_i folder exists
+            pass
+        else:
+            os.mkdir(temp)
+        #saving to output_dir
+        temp = output_dir + "/label_"+str(chunkid)
+        path = os.path.join(temp,"img"+str(i+1)+desiredFormat)
+        print("Saving to :"+str(path))
+
         cv2.imwrite(path,img)
-
-
-
-
-
-
-
 
 def substract(a,b):
     """Substract two strings
@@ -71,10 +82,6 @@ def substract(a,b):
     out = "".join(a.rsplit(b))
     return out
 
-
-
-
-
 def main(input_dir,output_dir):
     """
     Main Function
@@ -87,16 +94,26 @@ def main(input_dir,output_dir):
         os.mkdir(output_dir)
 
     #browse inputdir , crop and save images
-    i = 0
+    chunkid = int((len([file for file in os.listdir(input_dir)])-3)/2-1)
+    
+    print(chunkid)
     for file in os.listdir(input_dir):
         if file.lower().endswith(("x.npy")):
-            mat2image(np.load(input_dir+str("/")+str(file)),i,output_dir)
-            i+=1
-        else:#file not _x.npy;ignore
-            pass
+            mat2image(np.load(input_dir+str("/")+str(file)),chunkid,output_dir)
+            chunkid-=1
+        elif file.lower().endswith(("y.npy")):
+            #copy _y.npy file to corresponding path
+            temp =os.path.join(output_dir,"label_"+str(chunkid))
+            if (os.path.isdir(temp)):#making sure label_i folder exists
+                pass
+            else:
+                os.mkdir(temp)
+            path = os.path.join(input_dir,file)
+            print("Copying "+str(path)+ str(" to ")+output_dir)
+            shutil.copy(path,temp)
 
-
-
+            
+            
 
 if __name__=='__main__':
     #Parsing arguments
