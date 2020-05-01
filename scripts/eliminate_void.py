@@ -1,6 +1,8 @@
 """
-@author Kayode H. ADJE
-		kaadje@ttu.ee
+@authors Kayode H. ADJE
+		 kaadje@ttu.ee
+         Toghrul Aghakishiyev
+         toagha@ttu.ee
 """
 import os
 import argparse

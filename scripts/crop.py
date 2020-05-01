@@ -1,7 +1,8 @@
-
 """
-@author Kayode H. ADJE
-		kaadje@ttu.ee
+@authors Kayode H. ADJE
+		 kaadje@ttu.ee
+         Toghrul Aghakishiyev
+         toagha@ttu.ee
 """
 from gaps_dataset import gaps
 import numpy as np
@@ -31,15 +32,20 @@ def cropAndSave(im,output_dir,desiredHeight=180,desiredWidth=320):
     out: Image, yield croped image(s)
     """
     imgwidth, imgheight = im.size
+    desiredFormat = ".png"
  
     for i in range(imgheight//desiredHeight):
         for j in range(imgwidth//desiredWidth):
-            f_name,f_extension = os.path.splitext(im.filename)
+            f_name,_f_extension = os.path.splitext(im.filename)
             f_name = substract(f_name,os.path.dirname(f_name))
             box = (j*desiredWidth, i*desiredHeight, (j+1)*desiredWidth, (i+1)*desiredHeight)
             out = im.crop(box)
             out = np.array(out)
-            path = output_dir+f_name+'_'+str(i)+'_'+str(j)+f_extension
+            temp = substract(output_dir,os.path.dirname(output_dir))
+            if (temp=="/groundtruths"): #add '_groundtruth' to the path
+                path = output_dir+f_name+'_seg'+str(i)+str(j)+"_groundtruth"+str(desiredFormat)
+            else :
+                path = output_dir+f_name+'_seg'+str(i)+str(j)+str(desiredFormat)
             print("Saving cropped image to "+path)
             cv2.imwrite(path,out)
             #yield out
