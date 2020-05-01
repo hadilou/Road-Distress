@@ -1,4 +1,38 @@
-# Segmentation
+
+# Updates as 1/05/2020
+
+# a.) Segmentation
+The data is  organized as such:
+/train/filename_seg{ij}.png
+/valid/filename_seg{ij}.png
+/groundtruths/filename_seg{00}_groundtruth.png
+Please check crop.py
+
+
+Masks were converted to binary masks, pixels with 0,1 and 7 values are changed to 0(intact) and the others to 1(distres)
+Also, there was no need to eliminate void pixels values anymore so eliminate_void.py script became obsolete
+Please check binarize.py script.
+
+# b.) Classification
+Data is oragnized as follows
+
+/train/label_chunkid/filename.png
+/train/label_chunkid/filename.png
+...
+/valid/label_chunkid/filename.png
+/valid/label_chunkid/filename.png
+...
+/test/label_chunkid/filename.png
+/test/label_chunkid/filename.png
+
+Normalized matrix were first denormalized, then converted to RGB from Grayscale before being saved according to the above-mentioned naming
+convention
+
+
+
+# Updates as 30/04/2020
+
+# a.) Segmentation
 
 gaps.download(login='login',
 	output_dir ='../Dataset',
@@ -33,7 +67,7 @@ Each individual pixel in mask images correspond to one of these classes:
 If more than 80% of a segment is void the segment is simply ignored and corresponding image is removed from the images dataset. The threshold value can be also manipulated using eliminate_void.py script.
 
 
-# Classification
+# b.) Classification
 
 gaps.download(login='replace_with_your_login',
                     output_dir='desired folder',
@@ -48,5 +82,5 @@ We used NORMvsDISTRESS_50k with a patch size of 160x160. It consists of followin
 3. Valid: 2 chunks
 4. Valid test: 2 chunks
 
-A chunk is a numpy array consisting of 5120 normalized images of 160x160 size within the range of -1 to 1. Also there is a corresponding label for each chunk with a possible value of 0 (intact road) and 1 (distress).
+A chunk is a numpy array consisting of 5120( except the last chunk of train folder which has 3920) normalized images of 160x160 size within the range of -1 to 1. Also there is a corresponding label for each chunk with a possible value of 0 (intact road) and 1 (distress).
 
