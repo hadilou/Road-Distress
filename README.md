@@ -1,19 +1,19 @@
 
 # Updates as 1/05/2020
 
-# a.) Segmentation
-The data is  organized as such:
-/train/filename_seg{ij}.png
-/valid/filename_seg{ij}.png
-/groundtruths/filename_seg{00}_groundtruth.png
+## a.) Segmentation
+The data is  organized as such: </br>
+/train/filename_seg{ij}.png </br>
+/valid/filename_seg{ij}.png </br>
+/groundtruths/filename_seg{00}_groundtruth.png </br>
 Please check crop.py
 
 
-Masks were converted to binary masks, pixels with 0,1 and 7 values are changed to 0(intact) and the others to 1(distres)
+Masks were converted to binary masks, pixels with 0,1 and 7 values are changed to 0(intact) and the others to 1(distres). </br>
 Also, there was no need to eliminate void pixels values anymore so eliminate_void.py script became obsolete
 Please check binarize.py script.
 
-# b.) Classification
+## b.) Classification
 Data is oragnized as follows
 
 /train/label_chunkid/filename.png
@@ -32,7 +32,7 @@ convention
 
 # Updates as 30/04/2020
 
-# a.) Segmentation
+## a.) Segmentation
 
 gaps.download(login='login',
 	output_dir ='../Dataset',
@@ -67,7 +67,7 @@ Each individual pixel in mask images correspond to one of these classes:
 If more than 80% of a segment is void the segment is simply ignored and corresponding image is removed from the images dataset. The threshold value can be also manipulated using eliminate_void.py script.
 
 
-# b.) Classification
+## b.) Classification
 
 gaps.download(login='replace_with_your_login',
                     output_dir='desired folder',
