@@ -61,8 +61,7 @@ def main(input_dir,output_dir):
     """
 #make sure directory exists
     if (os.path.isdir(output_dir)):
-        shutil.rmtree(output_dir)
-        os.mkdir(output_dir)
+        pass
     else:
         os.mkdir(output_dir)
 
@@ -72,7 +71,7 @@ def main(input_dir,output_dir):
             try:
                 im = Image.open(os.path.join(input_dir,file))
                 m = binarize(im,output_dir)
-                print(np.where(m==1))
+                #print(np.where(m==1))
                 filename = substract(im.filename,os.path.dirname(im.filename))
                 path = output_dir+ filename
                 print("Saving binarized img to ",format(path))

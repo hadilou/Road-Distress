@@ -13,7 +13,7 @@ import cv2
 import argparse
 import shutil
 
-def cropAndSave(im,output_dir,desiredHeight=180,desiredWidth=320):
+def cropAndSave(im,output_dir,desiredHeight=320,desiredWidth=180):
     """ 
     Crop given image to desired height and width and save to desired folder
 

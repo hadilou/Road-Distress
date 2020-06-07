@@ -9,8 +9,9 @@ from gaps_dataset import gaps
 # possible values: [None, 'train', 'valid', 'valid-test', 'test']
 # possible values: [64, 96, 128, 160, 192, 224, 256]
 
-gaps.download(login='login',
-	output_dir ='../Dataset',
+gaps.download(login='gapsro2s;i2A*7',
+	output_dir ='../Dataset/ZEB_50k',
 	version=2,
-	patchsize='segmentation', 
+	patchsize=224, 
+	issue='ZEB_50k',
 	debug_outputs =True)
