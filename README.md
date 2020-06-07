@@ -1,4 +1,7 @@
 
+Wep app available at https://modeling.onrender.com/ </br>
+
+
 # Updates as 1/05/2020
 
 ## a.) Segmentation
@@ -67,7 +70,7 @@ Each individual pixel in mask images correspond to one of these classes:
 If more than 80% of a segment is void the segment is simply ignored and corresponding image is removed from the images dataset. The threshold value can be also manipulated using eliminate_void.py script.
 
 
-## b.) Classification
+# b.) Classification
 
 gaps.download(login='replace_with_your_login',
                     output_dir='desired folder',
