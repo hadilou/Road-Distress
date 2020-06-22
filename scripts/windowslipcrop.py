@@ -58,8 +58,8 @@ def cropAndSave(im,output_dir,desiredHeight=224,desiredWidth=224):
     desiredFormat = ".png"
 
 
-    for i in range(0,imgheight-desiredHeight+1,53):
-        for j in range(0,imgwidth-desiredWidth+1,107):
+    for i in range(0,imgheight-desiredHeight+1,107):
+        for j in range(0,imgwidth-desiredWidth+1,53):
             f_name,_f_extension = os.path.splitext(im.filename)
             f_name = substract(f_name,os.path.dirname(f_name))
             box = (j, i, j+desiredWidth, i+desiredHeight)
@@ -69,14 +69,12 @@ def cropAndSave(im,output_dir,desiredHeight=224,desiredWidth=224):
             p = void_percentage(out)
             if (p <= 90):
                 if (temp=="/groundtruths"): #add '_groundtruth' to the path
-                    path = output_dir+f_name+'_seg'+str(i)+'_'+str(j)+"_groundtruth"+str(desiredFormat)
+                    path = output_dir+f_name+'_w'+str(i)+'_h'+str(j)+"_groundtruth"+str(desiredFormat)
                 else :
-                    path = output_dir+f_name+'_seg'+str(i)+'_'+str(j)+str(desiredFormat)
-                print('Saving p='+str(p))
+                    path = output_dir+f_name+'_w'+str(i)+'_h'+str(j)+str(desiredFormat)
                 print("Saving cropped image to "+path)
                 cv2.imwrite(path,out)
             else:
-                print('Passed p='+str(p))
                 pass
 
     # for i in range(imgheight//desiredHeight+1):
